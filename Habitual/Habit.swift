@@ -7,8 +7,8 @@
 
 import Foundation
 
-struct Habit: Identifiable {
-    let id = UUID()
+struct Habit: Codable, Identifiable {
+    var id = UUID()
     let name: String
     let description: String
     let consecDays: Int
@@ -18,6 +18,13 @@ struct Habit: Identifiable {
 class Habits: ObservableObject {
     @Published var habits: [Habit]
     init() {
+        if let data = UserDefaults.standard.data(forKey: "habits") {
+            if let loaded = try? JSONDecoder().decode([Habit].self, from: data) {
+                self.habits = loaded
+                return
+            }
+        }
+        
         self.habits = [Habit]()
     }
 }

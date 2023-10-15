@@ -10,6 +10,8 @@ import SwiftUI
 struct ContentView: View {
     @StateObject var habits = Habits()
     
+    @State private var isShowingAddSheet = false
+    
     var body: some View {
         NavigationView {
             List {
@@ -22,8 +24,10 @@ struct ContentView: View {
             }
             .navigationTitle("Habits")
             .toolbar {
-                Button {
+                NavigationLink {
                     //Bring up sheet to create new Habit
+                    AddHabitView(habits: habits)
+//                    isShowingAddSheet = true
                 } label: {
                     Image(systemName: "plus")
                 }
