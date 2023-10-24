@@ -34,6 +34,7 @@ struct AddHabitView: View {
             Button("Add New Habit") {
                 let habit = Habit(name: habitName, description: habitDesc, consecDays: 0, dateStarted: dateStarted)
                 habits.habits.append(habit)
+                //Add to UD
                 dismiss()
             }
         }

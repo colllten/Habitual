@@ -16,10 +16,15 @@ struct ContentView: View {
         NavigationView {
             List {
                 ForEach(habits.habits, id: \.id) { habit in
-                    HStack {
-                        Text(habit.name)
-                        Text(habit.consecDays, format: .number)
+                    NavigationLink {
+                        EditHabitView(habits: habits, habit: habit)
+                    } label: {
+                        HStack {
+                            Text(habit.name)
+                            Text(habit.consecDays, format: .number)
+                        }
                     }
+
                 }
             }
             .navigationTitle("Habits")

@@ -9,14 +9,20 @@ import Foundation
 
 struct Habit: Codable, Identifiable {
     var id = UUID()
-    let name: String
+    var name: String
     let description: String
     let consecDays: Int
     let dateStarted: Date
 }
 
 class Habits: ObservableObject {
-    @Published var habits: [Habit]
+    @Published var habits = [Habit]() {
+        didSet {
+            if let encoded = try? JSONEncoder().encode(habits) {
+                UserDefaults.standard.set(encoded, forKey: "habits")
+            }
+        }
+    }
     init() {
         if let data = UserDefaults.standard.data(forKey: "habits") {
             if let loaded = try? JSONDecoder().decode([Habit].self, from: data) {
